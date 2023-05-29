@@ -13,9 +13,10 @@ class Forest:
         density = float(input('What percentage of grid cells are occupied by trees? (0.10-1): '))
         percentFir = float(input('What percentage of trees are Fir? (0.00-1): '))
         wetness = float(input('How wet is the forest? (1-3), (1=dry, 3=wet): '))
-        return density, percentFir, wetness
+        windyness = float(input('How windy is it? (0.00-1): '))
+        return density, percentFir, wetness, windyness
 
-    def initialize_forest_list(self, density, percentFir, wetness):
+    def initialize_forest_list(self, density, percentFir, wetness, windyness):
         
         #Adds trees to self.forestList based on density, percentFir, and wetness.
        
@@ -25,18 +26,16 @@ class Forest:
                 if random_density <= density:
                     random_fir = random.uniform(0.0, 1)
                     if random_fir <= percentFir:
-                        obj = Fir(False, wetness, j, i)
+                        obj = Fir(False, wetness, windyness, j, i)
                         self.addTree(obj)
                     else:
-                        obj = Oak(False, wetness, j, i)
+                        obj = Oak(False, wetness, windyness, j, i)
                         self.addTree(obj)
                 else:
                     self.addTree(None)
 
     def initial_tree_on_fire(self):
-        
         #Sets a random tree on fire.
-        
         newList = [index for index, obj in enumerate(self.forestList) if obj is not None]
         number = random.randint(0, len(newList) - 1)
         fire_index = newList[number]
